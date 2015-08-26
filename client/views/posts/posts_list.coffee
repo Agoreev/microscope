@@ -1,4 +1,4 @@
-var postsData = [
+postsData = [
   {
     title:'Introducing Telescope',
     url: 'http://sashagreif.com/introducing-telescope/'
@@ -11,8 +11,7 @@ var postsData = [
     title: 'The Meteor Book',
     url: 'http://themeteorbook.com'
   }
-];
+]
 
-Template.postsList.helpers({
+Template.postsList.helpers
   posts: postsData
-});
