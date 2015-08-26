@@ -1,14 +1,14 @@
 postsData = [
   {
-    title:'Introducing Telescope',
+    title:'Introducing Telescope'
     url: 'http://sashagreif.com/introducing-telescope/'
-  },
+  }
   {
-    title: 'Meteor',
+    title: 'Meteor'
     url: 'http://meteor.com'
-  },
+  }
   {
-    title: 'The Meteor Book',
+    title: 'The Meteor Book'
     url: 'http://themeteorbook.com'
   }
 ]
