@@ -1,10 +1,11 @@
 Router.configure
   layoutTemplate: 'layout'
-  loadingTemplate: 'loading',
+  loadingTemplate: 'loading'
+  notFoundTemplate: 'notFound'
   waitOn: -> Meteor.subscribe "posts"
 
-Router.map ->
-  this.route 'postsList', path: '/'
-  this.route 'postPage', path: '/posts/:_id', data: -> Posts.findOne this.params._id
+Router.route '/', name: 'postsList'
+Router.route '/posts/:_id', name: 'postPage', data: -> Posts.findOne this.params._id
+Router.route '/submit', name: 'postSubmit'
 
-Router.onBeforeAction 'loading'
+Router.onBeforeAction 'dataNotFound', only: 'postPage'
