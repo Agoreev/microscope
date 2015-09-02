@@ -2,7 +2,7 @@ Router.configure
   layoutTemplate: 'layout'
   loadingTemplate: 'loading'
   notFoundTemplate: 'notFound'
-  waitOn: -> [Meteor.subscribe "posts", Meteor.subscribe "comments"]
+  waitOn: -> [Meteor.subscribe('posts'), Meteor.subscribe('comments')]
 
 Router.route '/', name: 'postsList'
 Router.route '/posts/:_id',  name: 'postPage', data: -> Posts.findOne(this.params._id)
