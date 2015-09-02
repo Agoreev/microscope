@@ -1,4 +1,4 @@
-Template.name.events
+Template.postEdit.events
   "submit form": (event) ->
     event.preventDefault()
 
@@ -14,10 +14,10 @@ Template.name.events
         Router.go('postPage', {_id:currentPostId})
       )
 
-    "click .delete": (event) ->
-      event.preventDefault()
+  "click .delete": (event) ->
+    event.preventDefault()
 
-      if confirm("Delete this post?")
-        currentPostId = this._id
-        Posts.remove(currentPostId)
-        Router.go('postsList')
+    if confirm("Delete this post?")
+      currentPostId = this._id
+      Posts.remove(currentPostId)
+      Router.go('postsList')
