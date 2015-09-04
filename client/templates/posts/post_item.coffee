@@ -1,7 +1,5 @@
 Template.postItem.helpers
 
-  commentsCount: -> Comments.find(postId: this._id).count()
-
   ownPost: -> this.userId == Meteor.userId()
 
   domain: ->
