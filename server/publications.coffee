@@ -1,4 +1,9 @@
-Meteor.publish 'posts', -> Posts.find()
+Meteor.publish 'posts', (options) ->
+  check(options,
+    sort: Object
+    limit: Number
+  )
+  Posts.find({}, options)
 
 Meteor.publish 'comments', (postId) ->
   check(postId, String)

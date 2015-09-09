@@ -2,9 +2,9 @@ Router.configure
   layoutTemplate: 'layout'
   loadingTemplate: 'loading'
   notFoundTemplate: 'notFound'
-  waitOn: -> [Meteor.subscribe('posts'), Meteor.subscribe('notifications')]
+  waitOn: -> Meteor.subscribe 'notifications'
 
-Router.route '/', name: 'postsList'
+
 
 Router.route '/posts/:_id',
   name: 'postPage'
@@ -16,6 +16,15 @@ Router.route '/posts/:_id/edit',
   data: -> Posts.findOne(this.params._id)
 
 Router.route '/submit', name: 'postSubmit'
+
+Router.route '/:postsLimit?',
+  name: 'postsList'
+  waitOn: ->
+    limit = parseInt(this.params.postsLimit) || 5
+    Meteor.subscribe('posts', sort: {submitted: -1}, limit: limit)
+  data: ->
+    limit = parseInt(this.params.postsLimit) || 5
+    return posts: Posts.find({}, sort: {submitted: -1}, limit: limit)
 
 requireLogin = ->
   if !Meteor.user()
