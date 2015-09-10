@@ -4,7 +4,22 @@ Router.configure
   notFoundTemplate: 'notFound'
   waitOn: -> Meteor.subscribe 'notifications'
 
-
+@PostsListController = RouteController.extend
+  template: 'postsList'
+  increment: 5
+  postsLimit: -> parseInt(this.params.postsLimit) || this.increment
+  findOptions: ->
+    sort: {submitted: -1}
+    limit: this.postsLimit()
+  waitOn: -> Meteor.subscribe('posts', this.findOptions())
+  posts: -> Posts.find({}, this.findOptions())
+  data: ->
+    hasMore = this.posts().count() == this.postsLimit()
+    nextPath = this.route.path(postsLimit: this.postsLimit() + this.increment)
+    return {
+      posts: this.posts()
+      nextPath: if hasMore then nextPath else null
+    }
 
 Router.route '/posts/:_id',
   name: 'postPage'
@@ -19,12 +34,6 @@ Router.route '/submit', name: 'postSubmit'
 
 Router.route '/:postsLimit?',
   name: 'postsList'
-  waitOn: ->
-    limit = parseInt(this.params.postsLimit) || 5
-    Meteor.subscribe('posts', sort: {submitted: -1}, limit: limit)
-  data: ->
-    limit = parseInt(this.params.postsLimit) || 5
-    return posts: Posts.find({}, sort: {submitted: -1}, limit: limit)
 
 requireLogin = ->
   if !Meteor.user()
