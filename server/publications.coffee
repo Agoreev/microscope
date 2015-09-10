@@ -5,6 +5,10 @@ Meteor.publish 'posts', (options) ->
   )
   Posts.find({}, options)
 
+Meteor.publish 'singlePost', (id) ->
+  check(id, String)
+  id && Posts.find(id)
+
 Meteor.publish 'comments', (postId) ->
   check(postId, String)
   Comments.find(postId: postId)
