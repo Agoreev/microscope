@@ -47,6 +47,24 @@ Meteor.methods
       userId: user._id
       author: user.username
       submitted: new Date())
+      upvoters: []
+      votes: 0
 
     postId = Posts.insert(post)
     return _id: postId
+
+  upvote: (postId) ->
+    check(this.userId, String)
+    check(postId, String)
+
+    post = Posts.findOne(postId)
+    if !post
+      throw new Meteor.Error('invalid', 'Post not found')
+
+    if (_.include(post.upvoters, this.userId))
+      throw new Meteor.Error('invalid', 'Already upvoted this post')
+
+    Posts.update(post._id,
+      $addToSet: {upvoters: this.userId}
+      $inc: {votes: 1}
+    )
